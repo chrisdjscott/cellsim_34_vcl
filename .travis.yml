@@ -32,7 +32,7 @@ env:
     - MODEL=03 PYTHON=3.6 PYREDUCE=1 OMP=0 MKL=0  # check python reduce works with both python 2 and 3 (3 variable)
     - MODEL=04 PYTHON=2.7 PYREDUCE=1 OMP=0 MKL=0  # check python reduce works with 4 variable
     - MODEL=03 PYTHON=3.6 PYREDUCE=0 OMP=1 MKL=0  # check OpenMP version works
-#    - MODEL=03 PYTHON=3.6 PYREDUCE=0 OMP=0 MKL=1  # check MKL version works
+    - MODEL=03 PYTHON=3.6 PYREDUCE=0 OMP=0 MKL=1  # check MKL version works
 
 # install dependencies
 install:
@@ -56,12 +56,14 @@ install:
     - chmod +x tmp/miniconda.sh
     - tmp/miniconda.sh -b -p tmp/miniconda
     - export PATH=${curdir}/tmp/miniconda/bin:${PATH}
-    - conda update --yes conda
-    - conda create -n testenv --yes mkl numpy scipy python=${PYTHON}
+    - conda update --yes --quiet conda
+    - conda create -n testenv --yes --quiet numpy scipy python=${PYTHON}
     - source activate testenv
+    - if [ "${MKL}" == "1" ]; then conda install --yes --quiet --channel intel mkl-devel; fi
     - python --version
     - export MKL_ROOT=$(dirname $(dirname $(which python)))
     - echo "MKL_ROOT = ${MKL_ROOT}"
+    - echo "CONDA_PREFIX = ${CONDA_PREFIX}"
 
 # compile cellsim
 script:
