@@ -59,9 +59,9 @@ install:
     - conda update --yes --quiet conda
     - conda create -n testenv --yes --quiet numpy scipy python=${PYTHON}
     - source activate testenv
-    - if [ "${MKL}" == "1" ]; then conda install --yes --quiet --channel intel mkl-devel; fi
+    - if [ "${MKL}" == "1" ]; then conda install --yes --quiet mkl mkl-include; fi
     - python --version
-    - export MKL_ROOT=$(dirname $(dirname $(which python)))
+    - export MKL_ROOT=$CONDA_PREFIX
     - echo "MKL_ROOT = ${MKL_ROOT}"
     - echo "CONDA_PREFIX = ${CONDA_PREFIX}"
 
