@@ -61,8 +61,8 @@ install:
     - source activate testenv
     - if [ "${MKL}" == "1" ]; then conda install --yes --quiet mkl mkl-include; fi
     - python --version
-    - export MKL_ROOT=$CONDA_PREFIX
-    - echo "MKL_ROOT = ${MKL_ROOT}"
+    - export MKLROOT=$CONDA_PREFIX
+    - echo "MKLROOT = ${MKLROOT}"
     - echo "CONDA_PREFIX = ${CONDA_PREFIX}"
 
 # compile cellsim
